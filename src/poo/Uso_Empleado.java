@@ -2,24 +2,7 @@ package poo;
 import java.util.*;
 public class Uso_Empleado {
     public static void main(String[] args) {
-        /*
-        Empleado empleado1 = new Empleado("Paco Gómez", 85000, 1990,12,17); 
-        Empleado empleado2 = new Empleado("Ana López", 95000, 1995,06,02); 
-        Empleado empleado3 = new Empleado("Maria Martín", 10500, 2002,03,15); 
-
-        empleado1.subeSueldo(5);
-        empleado2.subeSueldo(5);
-        empleado3.subeSueldo(5);
-
-        System.out.println("Nombre: " + empleado1.dameNombre() + " Sueldo: " + empleado1.dameSueldo()
-        + " Fecha Alta: " + empleado1.dameFechaContrato());
-        
-        System.out.println("Nombre: " + empleado2.dameNombre() + " Sueldo: " + empleado2.dameSueldo()
-        + " Fecha Alta: " + empleado2.dameFechaContrato());
-
-        System.out.println("Nombre: " + empleado3.dameNombre() + " Sueldo: " + empleado3.dameSueldo()
-        + " Fecha Alta: " + empleado3.dameFechaContrato());
-        */
+   
         Jefatura jefe_RRHH = new Jefatura("Fran Fernández", 55000, 2024, 8, 12);
         jefe_RRHH.establece_incentivo(2570);
 
@@ -34,12 +17,12 @@ public class Uso_Empleado {
 
         Jefatura jefe_Finanzas = (Jefatura) misEmpleados[5];
         jefe_Finanzas.establece_incentivo(5000);
+        
 
+        System.out.println("El jefe "+ jefe_Finanzas.dameNombre()+" tiene un bonus de: "+jefe_Finanzas.establece_bonus(500));
+        System.out.println("El jefe "+ misEmpleados[3].dameNombre()+" tiene un bonus de: "+misEmpleados[3].establece_bonus(200));
 
-        /*for (int i=0; i< misEmpleados.length; i++){ //For Normal
-            misEmpleados[i].subeSueldo(5);
-
-        }*/
+    
         
         System.out.println(jefe_Finanzas.tomar_decisiones("Dar más días de vacaciones a los trabajadores"));
         
@@ -49,14 +32,6 @@ public class Uso_Empleado {
         
         Arrays.sort(misEmpleados);
 
-        /* 
-        for (int i=0; i< misEmpleados.length; i++){ //For Normal
-            System.out.println("Nombre: " + misEmpleados[i].dameNombre() + " Sueldo: " + misEmpleados[i].dameSueldo()
-        + " Fecha Alta: " + misEmpleados[i].dameFechaContrato());
-
-        }*/
-
-    
         for(Empleado e: misEmpleados){ //For Mejorado
             System.out.println("Nombre: " + e.dameNombre() + " Sueldo: " + e.dameSueldo()
         + " Fecha Alta: " + e.dameFechaContrato());
@@ -67,7 +42,7 @@ public class Uso_Empleado {
 
 }
 
-class Empleado implements Comparable {
+class Empleado implements Comparable, Trabajadores {
     private String nombre;
     private double sueldo;
     private Date altaContrato;
@@ -112,6 +87,11 @@ class Empleado implements Comparable {
         double aumento = sueldo *porcentaje/100;
         sueldo+=aumento;
     }
+    
+    public double establece_bonus(double gratificacion) {
+    	
+    	return Trabajadores.bonus_base + gratificacion;
+    }
 
 
 }
@@ -134,6 +114,12 @@ class Jefatura extends Empleado implements Jefes{
     
     public String tomar_decisiones (String decision) {
     	return "Un miembro de la dirección ha tomado la decisión de:" + decision;
+    }
+    
+    public double establece_bonus(double gratificacion) {
+    	double prima = 2000;
+    	
+    	return Trabajadores.bonus_base + gratificacion + prima;
     }
 
 }
